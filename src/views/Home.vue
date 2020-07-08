@@ -106,6 +106,7 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import pic from '../assets/images/pic.png'
+import piv from '../assets/images/piv.png'
 import { getSjlb, getBookList, UserInfo } from '@/api/home'
 import { getDdCount } from '@/api/order'
 import { initRes, invalidProperty, getInfo } from '@/utils/jsfunc'

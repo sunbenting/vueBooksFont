@@ -14,7 +14,7 @@ span<template>
                 ></el-checkbox>
               </div>
               <p>全选</p>
-            </div> -->
+            </div>-->
 
             <div style="margin: 15px 0;"></div>
             <div class="order-card" v-for="item in list" :key="item.id">
@@ -26,15 +26,20 @@ span<template>
               <div class="theme">
                 <span>主题活动名称</span>
                 <h2>{{item.PCMC}}</h2>
+                <!-- <h2>dddddd对对对顶顶顶顶哒哒哒哒哒哒多多多</h2> -->
               </div>
               <div class="book" @click="jumpToDetail(item)">
                 <div class="book-img">
+                  <!-- <img :src="item.img" alt width="140px" /> -->
                   <img :src="`data:image/jpg;base64,${item.FILE_STREAM}`" alt width="100%" />
                 </div>
                 <div class="book-brief">
                   <div class="title">{{item.SJMC}}</div>
                   <div class="author">{{item.SJZZ}} &nbsp;&nbsp;&nbsp;著</div>
                   <div class="press">{{item.SJCBS}}</div>
+                  <!-- <div class="title" :title="item.name">{{item.name}}</div>
+                  <div class="author">gggggg &nbsp;&nbsp;&nbsp;著</div>
+                  <div class="press">bbbbbbb</div> -->
                 </div>
               </div>
               <div class="quantity">
@@ -102,7 +107,7 @@ span<template>
                 </div>
               </div>
               <div class="evaluate">
-                <el-button type="primary"  @click="addcomment(item)">评价</el-button>
+                <el-button type="primary" @click="addcomment(item)">评价</el-button>
               </div>
             </div>
 
@@ -113,7 +118,6 @@ span<template>
               :current-page="currentPage"
               :page-sizes="[ 10, 20, 40]"
               :page-size="10"
-          
               layout="total, slot, sizes, ->, prev, pager, next"
               :total="subTotal"
               style="margin-top:15px;padding-right:0px;margin-right: -5px;"
@@ -150,7 +154,10 @@ import bus from '@/utils/bus'
 import { initRes, invalidProperty, getInfo } from '@/utils/jsfunc'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-
+import a from '../assets/images/a.jpg'
+import b from '../assets/images/b.jpg'
+import c from '../assets/images/c.jpg'
+import d from '../assets/images/d.jpg'
 export default {
   name: 'order',
   components: {
@@ -178,9 +185,15 @@ export default {
       hasSubmit: '',
       tableData: [],
       list: [
-        { ID: 1, label: 'ee' },
-        { ID: 2, label: 'ee' },
-        { ID: 3, label: 'ee' }
+        { ID: 1, label: 'ee', img: a, name: 'eeeeeeeeeeeeeeee' },
+        {
+          ID: 2,
+          label: 'ee',
+          img: b,
+          name: 'ddddddddddddddddddddddddddddddddd'
+        },
+        { ID: 3, label: 'ee', img: c, name: 'dddd' },
+        { ID: 3, label: 'ee', img: d, name: 'ccccccccccc' }
       ],
       subList: [],
       unparams: {
@@ -203,13 +216,13 @@ export default {
   },
   created() {},
   mounted() {
-    this.getUser()
+    this.getUser();
   },
   methods: {
     jumpToDetail(item) {
       this.$router.push({
         path: '/detail',
-        query: { SJID: item.SJID, PCID: this.pcid,userId:this.userId }
+        query: { SJID: item.SJID, PCID: this.pcid, userId: this.userId }
       })
     },
     changeNum(item) {
@@ -221,17 +234,17 @@ export default {
     },
     async getUser() {
       try {
-        const res = await UserInfo();
-        const objee = getInfo(res);
-        this.pcid = objee.ID;
-        this.userId = objee.userId;
-        this.subparams.PCID = objee.ID;
-        this.unparams.PCID = objee.ID;
-        console.log('object :>> ', objee);
-        this.initorder();
-        this.orderCountun();
-        this.orderCountsub();
-        this.subOrdr();
+        const res = await UserInfo()
+        const objee = getInfo(res)
+        this.pcid = objee.ID
+        this.userId = objee.userId
+        this.subparams.PCID = objee.ID
+        this.unparams.PCID = objee.ID
+        console.log('object :>> ', objee)
+        this.initorder()
+        this.orderCountun()
+        this.orderCountsub()
+        this.subOrdr()
       } catch (err) {
         console.log('err :>> ', err)
       }
@@ -298,7 +311,8 @@ export default {
       if (this.checkedItems.length > 0) {
         let obj = {
           ids: this.checkedItems,
-          ddzt:1
+          ddzt: 1,
+          pcid: this.pcid
         }
         console.log('obj :>> ', obj)
         this.sureOrder(obj)
@@ -314,12 +328,12 @@ export default {
           this.$message.error(str)
         }
       } else {
-        this.checkedItems=[];
+        this.checkedItems = []
         this.$message.success('提交成功！')
-        this.orderCountun();
-        this.initorder();
-        this.orderCountsub();
-        this.subOrdr();
+        this.orderCountun()
+        this.initorder()
+        this.orderCountsub()
+        this.subOrdr()
       }
     },
 
@@ -363,36 +377,36 @@ export default {
     },
     handleCheckAllChange(val) {
       this.checkedItems = val ? this.orderOptions : []
-      this.isIndeterminate = false;
-      console.log('all :>> ', this.checkedItems);
+      this.isIndeterminate = false
+      console.log('all :>> ', this.checkedItems)
     },
 
     handleCheckedCitiesChange(value) {
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.list.length;
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.list.length;
-      console.log(' this.checkedItems:>> ', this.checkedItems);
+      let checkedCount = value.length
+      this.checkAll = checkedCount === this.list.length
+      this.isIndeterminate = checkedCount > 0 && checkedCount < this.list.length
+      console.log(' this.checkedItems:>> ', this.checkedItems)
     },
     //page事件
     unhandleSizeChange(val) {
-      this.unparams.limit = val;
-      this.initorder();
+      this.unparams.limit = val
+      this.initorder()
     },
     unhandleCurrentChange(val) {
-      this.uncurrentPage = val;
-      this.unparams.start = (val - 1) * this.unparams.limit;
-      this.initorder();
-      this.orderCountun();
+      this.uncurrentPage = val
+      this.unparams.start = (val - 1) * this.unparams.limit
+      this.initorder()
+      this.orderCountun()
     },
     handleSizeChange(val) {
-      this.subparams.limit = val;
-      this.subOrdr();
+      this.subparams.limit = val
+      this.subOrdr()
     },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.subparams.start = (val - 1) * this.subparams.limit;
-      this.subOrdr();
-      this.orderCountsub();
+      this.currentPage = val
+      this.subparams.start = (val - 1) * this.subparams.limit
+      this.subOrdr()
+      this.orderCountsub()
     }
   }
 }
@@ -428,10 +442,10 @@ export default {
   // background-color: transparent;
   // border-radius: 0 0 12px 0;
 }
-  /deep/.el-checkbox__inner:hover {
-      border-color: #409EFF;
-      // border-radius: 0 0 12px 0;
-    }
+/deep/.el-checkbox__inner:hover {
+  border-color: #409eff;
+  // border-radius: 0 0 12px 0;
+}
 /deep/ .el-checkbox__inner::after {
   width: 6px;
   top: 6px;
@@ -565,10 +579,10 @@ export default {
       top: 0;
       width: 40px;
       height: 40px;
-        // border: 2px solid #ccc;
+      // border: 2px solid #ccc;
       // background-color: #ff7f00;
     }
-  
+
     .count {
       // padding: 4px 0 0 4px;
       color: #fff;
@@ -603,8 +617,21 @@ export default {
       align-items: center;
       justify-content: center;
       font-size: 12px;
+      max-width: 400px;
+      margin-left: 10px;
       .book-img {
         width: 140px;
+      }
+      .book-brief {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .title {
+          width: 220px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
       }
 
       .title {

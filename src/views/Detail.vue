@@ -3,7 +3,7 @@
     <header-nav :background="true">
       <el-badge class="shop-car">
         <img src="../assets/images/shopping.png" alt width="80%" @click="jumpToOrder" />
-        <span class="carnum"  v-if="unddsl!=0">{{unddsl}}</span>
+        <span class="carnum" v-if="unddsl!=0">{{unddsl}}</span>
       </el-badge>
       <i class="detail-i"></i>
     </header-nav>
@@ -123,7 +123,7 @@ import {
   aadReviewSupport,
   getPlCount
 } from '@/api/home'
-import { subReviewInfo ,getDdCount} from '@/api/order'
+import { subReviewInfo, getDdCount } from '@/api/order'
 import { initRes, invalidProperty, getInfo } from '@/utils/jsfunc'
 export default {
   name: 'detail',
@@ -154,21 +154,21 @@ export default {
       PCID: '',
       SJID: '',
       rowimg: '',
-      unddsl:'',
-      userId:''
+      unddsl: '',
+      userId: ''
     }
   },
   mounted() {
-    const { SJID, PCID,userId } = this.$route.query
-    this.SJID = SJID;
-    this.PCID = PCID;
-    this.userId=userId;
-    this.rowInfo({ SJID, PCID });
-    this.orderCountun();
+    const { SJID, PCID, userId } = this.$route.query
+    this.SJID = SJID
+    this.PCID = PCID
+    this.userId = userId
+    this.rowInfo({ SJID, PCID })
+    this.orderCountun()
   },
   methods: {
     //待提交订单数量
-        async orderCountun() {
+    async orderCountun() {
       let obj = {
         CJR: this.userId,
         PCID: this.PCID,
@@ -177,7 +177,7 @@ export default {
       const res = await getDdCount(obj)
       const str = res.slice(res.indexOf('DDCOUNT'), -2)
       const str1 = str.slice(str.indexOf(':') + 1)
-      this.unddsl = Number(str1);
+      this.unddsl = Number(str1)
     },
     //获取书籍评论数量
     async initCommentCount() {
@@ -415,16 +415,17 @@ main {
         color: #ccc;
         font-size: 12px;
         font-weight: normal;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 4px 10px;
         &:after {
           content: '';
           position: absolute;
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
-          width: 48px;
+          width: auto;
           height: 24px;
-          border: 1px solid #ccc;
-          border-radius: 12px;
         }
       }
     }
